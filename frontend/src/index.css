@@ -1,0 +1,97 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+.active hr {
+    @apply block
+}
+.navList {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  flex: 1;
+}
+
+.mobileMenuIcon {
+  display: none;
+  cursor: pointer;
+}
+
+/* Dropdown menu styling */
+.dropdownMenu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  width: 150px;
+}
+
+.dropdownItem {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+/* Mobile Menu overlay */
+.mobileMenuOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 260px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobileMenuOverlay.open {
+  transform: translateX(0);
+}
+
+.mobileMenuCloseBtn {
+  align-self: flex-end;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.mobileMenuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobileMenuList a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navList {
+    display: none !important;
+  }
+
+  .mobileMenuIcon {
+    display: block !important;
+  }
+}
