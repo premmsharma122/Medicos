@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Docters from './pages/Docters';
 import Login from './pages/Login';
 import About from './pages/About';
-import Contact from './pages/contact';
+import Contact from './pages/Contact';
 import Myprofile from './pages/Myprofile';
 import MyApponitments from './pages/MyApponitments'
 import Appointment from './pages/Appointment';
