@@ -12,7 +12,7 @@ const AdminContextProvider = (props) => {
   const [docters, setDocters] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [dashData, setDashData] = useState(false);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = "https://medicos-scwl.onrender.com/";
 
  const getAllDocters = async () => {
   try {
