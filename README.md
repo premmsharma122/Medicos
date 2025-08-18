@@ -54,6 +54,7 @@
    - Postman or Insomnia for API testing  
    - Git/GitHub for version control
 ###   Folder Structre
+```
 Medicos
 ├─ admin
 │ ├─ public
@@ -114,3 +115,4 @@ Medicos
 │ ├─ adminRoute.js
 │ ├─ docterRoute.js
 │ └─ userRoute.js
+```
