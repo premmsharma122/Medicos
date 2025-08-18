@@ -56,66 +56,63 @@
 ### Folder Structure:
 
 Medicos
-|
-|- admin
-|  |
-|  |- public
-|  |- src
-|  |  |- AdminContext.jsx
-|  |- .gitignore
-|  |- README.md
-|  |- eslint.config.js
-|  |- index.html
-|  |- package-lock.json
-|  |- package.json
-|  |- vite.config.js
-|
-|- frontend
-|  |
-|  |- components
-|  |  |- Banner.jsx
-|  |  |- Footer.jsx
-|  |  |- Header.jsx
-|  |  |- Navbar.jsx
-|  |  |- RelatedDocters.jsx
-|  |  |- SpecialityMenu.jsx
-|  |  |- TopDocters.jsx
-|  |
-|  |- context
-|  |  |- AppContext.jsx
-|  |
-|  |- pages
-|     |- About.jsx
-|     |- Appointment.jsx
-|     |- Contact.jsx
-|     |- Docters.jsx
-|     |- Home.jsx
-|     |- Login.jsx
-|     |- MyAppointments.jsx
-|     |- MyProfile.jsx
-|
-|- backend
-|  |
-|  |- config
-|  |  |- cloudinary.js
-|  |  |- mongodb.js
-|  |
-|  |- controllers
-|  |  |- adminController.js
-|  |  |- docterController.js
-|  |  |- userController.js
-|  |
-|  |- middlewares
-|  |  |- authAdmin.js
-|  |  |- authUser.js
-|  |  |- multer.js
-|  |
-|  |- models
-|  |  |- appointmentModels.js
-|  |  |- docterModel.js
-|  |  |- userModels.js
-|  |
-|  |- routes
-|     |- adminRoute.js
-|     |- docterRoute.js
-|     |- userRoute.js
+│
+├─ admin
+│  ├─ public
+│  ├─ src
+│  │  └─ AdminContext.jsx
+│  ├─ .gitignore
+│  ├─ README.md
+│  ├─ eslint.config.js
+│  ├─ index.html
+│  ├─ package-lock.json
+│  ├─ package.json
+│  └─ vite.config.js
+│
+├─ frontend
+│  ├─ components
+│  │  ├─ Banner.jsx
+│  │  ├─ Footer.jsx
+│  │  ├─ Header.jsx
+│  │  ├─ Navbar.jsx
+│  │  ├─ RelatedDocters.jsx
+│  │  ├─ SpecialityMenu.jsx
+│  │  └─ TopDocters.jsx
+│  │
+│  ├─ context
+│  │  └─ AppContext.jsx
+│  │
+│  └─ pages
+│     ├─ About.jsx
+│     ├─ Appointment.jsx
+│     ├─ Contact.jsx
+│     ├─ Docters.jsx
+│     ├─ Home.jsx
+│     ├─ Login.jsx
+│     ├─ MyAppointments.jsx
+│     └─ MyProfile.jsx
+│
+├─ backend
+│  ├─ config
+│  │  ├─ cloudinary.js
+│  │  └─ mongodb.js
+│  │
+│  ├─ controllers
+│  │  ├─ adminController.js
+│  │  ├─ docterController.js
+│  │  └─ userController.js
+│  │
+│  ├─ middlewares
+│  │  ├─ authAdmin.js
+│  │  ├─ authUser.js
+│  │  └─ multer.js
+│  │
+│  ├─ models
+│  │  ├─ appointmentModels.js
+│  │  ├─ docterModel.js
+│  │  └─ userModels.js
+│  │
+│  └─ routes
+│     ├─ adminRoute.js
+│     ├─ docterRoute.js
+│     └─ userRoute.js
