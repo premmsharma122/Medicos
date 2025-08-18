@@ -52,8 +52,7 @@
    - dotenv for environment variable management  
    - Nodemon for backend development  
    - Postman or Insomnia for API testing  
-   - Git/GitHub for version control  
-### Folder Structure:
+   - Git/GitHub for version control
 
 Medicos
 │
