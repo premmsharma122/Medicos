@@ -1,118 +1,271 @@
-# Medicos : A Full Stack Web Application which handles a full hospital management system.
+# 🏥 Medicos — Full-Stack Hospital Management System
 
-### Features  :
+> Book a doctor in under a minute. Manage a whole hospital from one dashboard.
 
--> It has an admin control panel which controls doctors availability and patients management.  
+![Stack](https://img.shields.io/badge/MERN-Stack-green)
+![Auth](https://img.shields.io/badge/Auth-JWT%20%2B%20RBAC-blue)
+![Storage](https://img.shields.io/badge/Media-Cloudinary-orange)
+![Status](https://img.shields.io/badge/Status-Hackathon%20Build-purple)
 
--> A **real time slot booking system** for patients and also adjust, cancel appointments by their comfort.  
+**🔗 Live Demo:** `<add-link>` | **🎥 Demo Video:** `<add-link>` | **📊 Pitch Deck:** `<add-link>`
 
--> A **authentication verify** patients and admin control also.  
+---
 
--> Patients can also manage their profile by adding details and **Profile Photo**.  
+## 📌 Table of Contents
+1. [The Problem](#-the-problem)
+2. [Our Solution](#-our-solution)
+3. [Key Features](#-key-features)
+4. [Demo Credentials](#-demo-credentials)
+5. [Tech Stack](#-tech-stack)
+6. [Architecture](#-architecture)
+7. [Data Model](#-data-model)
+8. [API Reference](#-api-reference)
+9. [Folder Structure](#-folder-structure)
+10. [Getting Started](#-getting-started)
+11. [Security Design](#-security-design)
+12. [Challenges & Learnings](#-challenges--learnings)
+13. [Roadmap](#-roadmap)
+14. [Team](#-team)
 
--> Admin control has access to all doctors like **adding full details of doctor background and image, availability of each doctor and manage cancellation of appointments**.  
+---
 
--> (This web app also supports **Payment gateway** but currently we do not have a Razorpay account to implement it, but we manage all necessary things required for a payment gateway, so **in future when we make it production ready** we can implement it.)
+## 🚨 The Problem
+- Patients call or walk in just to learn whether a doctor is free.
+- Hospital staff track schedules in registers or spreadsheets, causing double bookings and lost records.
+- Admins have no single view of doctors, patients, and appointments.
 
-### Tech Stacks:
+## 💡 Our Solution
+Medicos gives each role exactly what it needs:
 
--> **Frontend:** React.js  
-   - Component-based UI development  
-   - React Router for client-side routing  
-   - Axios or Fetch API for HTTP requests  
-   - State management with useState, useEffect, and potentially Context API or Redux  
-   - Form handling and validation using controlled components or libraries like Formik/Yup  
+| Role | What they get |
+| --- | --- |
+| **Patient** | Browse doctors by speciality, see live slots, book / cancel, manage profile |
+| **Doctor** | Availability toggle and appointment visibility |
+| **Admin** | Add doctors, control availability, view all appointments and patients, cancel bookings |
 
--> **Backend:** Node.js with Express.js  
-   - RESTful API development  
-   - Middleware for authentication, logging, and error handling  
-   - Routing to handle API endpoints for patients, doctors, appointments, etc.  
-   - Body parsing using `express.json()` and `express.urlencoded()`  
+---
 
--> **Database:** MongoDB Atlas with Mongoose  
-   - Schema definition using Mongoose models  
-   - CRUD operations for users, doctors, appointments  
-   - Relationships via referencing ObjectIds  
-   - Aggregation pipelines for advanced queries if needed  
+## ✨ Key Features
+- **Admin Control Panel** — manage doctor profiles, availability, patient records, cancellations
+- **Real-Time Appointment Booking** — slot-based booking against live availability
+- **Secure Multi-Role Auth** — JWT + bcrypt with role-based middleware (RBAC)
+- **Patient Profiles** — edit details, upload photo (Cloudinary)
+- **Doctor Management** — specialties, background, fees, images
+- **Payment-Ready** — schema prepared for Razorpay integration
 
--> **Authentication & Security:**  
-   - JWT (JSON Web Tokens) for secure authentication  
-   - Password hashing with bcrypt  
-   - Role-based access control for admin vs patient vs doctor  
+---
 
--> **File Storage & Media:**  
-   - Cloudinary for storing and serving profile images or doctor images  
-   - Image uploading via Multer (optional)  
+## 🔑 Demo Credentials
+> Put throwaway accounts here so judges can test in seconds. Never use real data.
 
--> **Payments (Future Implementation):**  
-   - Razorpay integration (planned) for handling patient payments  
+| Role | Email | Password |
+| --- | --- | --- |
+| Patient | `patient@demo.com` | `demo1234` |
+| Admin | `admin@demo.com` | `admin1234` |
 
--> **Other Tools / Libraries:**  
-   - CORS middleware to handle cross-origin requests  
-   - dotenv for environment variable management  
-   - Nodemon for backend development  
-   - Postman or Insomnia for API testing  
-   - Git/GitHub for version control
-###   Folder Structre
+---
+
+## 🧰 Tech Stack
+
+| Layer | Technologies |
+| --- | --- |
+| **Frontend** | React.js (Vite), React Router, Axios, Context API, Tailwind CSS |
+| **Admin Portal** | React.js (Vite), Context API |
+| **Backend** | Node.js, Express.js, REST APIs, custom middleware |
+| **Database** | MongoDB Atlas, Mongoose |
+| **Security** | JWT, bcrypt, role-based middleware |
+| **Storage** | Cloudinary, Multer |
+| **Tooling** | CORS, dotenv, Nodemon, Postman, Git/GitHub |
+
+---
+
+## 🏗 Architecture
+
+```text
+[ Patient Browser ]      [ Admin Browser ]
+        │                        │
+        ▼                        ▼
+┌────────────────┐      ┌────────────────┐
+│ Frontend (SPA) │      │ Admin Portal   │
+└───────┬────────┘      └───────┬────────┘
+        └──────────┬────────────┘
+                   ▼  REST + JWT (Axios)
+        ┌─────────────────────────┐
+        │  Express API            │
+        │  authUser / authAdmin   │
+        │  Controllers            │
+        └──────┬───────────┬──────┘
+               ▼           ▼
+        ┌───────────┐ ┌───────────┐
+        │ MongoDB   │ │ Cloudinary│
+        │ Atlas     │ │ (images)  │
+        └───────────┘ └───────────┘
 ```
+
+**Request flow (booking):** `Login → JWT issued → Browse doctors → Pick slot → POST /book-appointment → authUser verifies token → check slot free → save appointment → update doctor's booked slots`
+
+---
+
+## 🗄 Data Model
+
+```text
+User         { name, email, password(hash), image, phone, address, gender, dob }
+Doctor       { name, email, password(hash), image, speciality, degree, experience,
+               about, available, fees, address, slots_booked{date:[times]}, date }
+Appointment  { userId→User, docId→Doctor, slotDate, slotTime, userData, docData,
+               amount, date, cancelled, payment, isCompleted }
+```
+
+> Adjust field names to match your Mongoose schemas. The `payment` flag plus `amount` is what makes the app Razorpay-ready.
+
+---
+
+## 📡 API Reference
+> Align the paths below with your actual route files.
+
+| Method | Endpoint | Auth | Purpose |
+| --- | --- | --- | --- |
+| POST | `/api/user/register` | — | Register patient |
+| POST | `/api/user/login` | — | Login, returns JWT |
+| GET | `/api/user/get-profile` | User | Fetch profile |
+| POST | `/api/user/update-profile` | User | Update details + photo |
+| POST | `/api/user/book-appointment` | User | Book a slot |
+| GET | `/api/user/appointments` | User | List my appointments |
+| POST | `/api/user/cancel-appointment` | User | Cancel and free the slot |
+| GET | `/api/doctor/list` | — | Public doctor list |
+| POST | `/api/admin/login` | — | Admin login |
+| POST | `/api/admin/add-doctor` | Admin | Add doctor (multipart) |
+| POST | `/api/admin/change-availability` | Admin | Toggle availability |
+| GET | `/api/admin/appointments` | Admin | All appointments |
+| POST | `/api/admin/cancel-appointment` | Admin | Cancel any appointment |
+| GET | `/api/admin/dashboard` | Admin | Counts and latest bookings |
+
+Send the token in the header: `Authorization: Bearer <token>` (or `token: <jwt>` if that is what your middleware reads).
+
+---
+
+## 📁 Folder Structure
+
+```text
 Medicos
-├─ admin
-│ ├─ public
-│ ├─ src
-│ │ └─ AdminContext.jsx
-│ ├─ .gitignore
-│ ├─ README.md
-│ ├─ eslint.config.js
-│ ├─ index.html
-│ ├─ package-lock.json
-│ ├─ package.json
-│ └─ vite.config.js
-│
-├─ frontend
-│ ├─ components
-│ │ ├─ Banner.jsx
-│ │ ├─ Footer.jsx
-│ │ ├─ Header.jsx
-│ │ ├─ Navbar.jsx
-│ │ ├─ RelatedDocters.jsx
-│ │ ├─ SpecialityMenu.jsx
-│ │ └─ TopDocters.jsx
-│ │
-│ ├─ context
-│ │ └─ AppContext.jsx
-│ │
-│ └─ pages
-│ ├─ About.jsx
-│ ├─ Appointment.jsx
-│ ├─ Contact.jsx
-│ ├─ Docters.jsx
-│ ├─ Home.jsx
-│ ├─ Login.jsx
-│ ├─ MyAppointments.jsx
-│ └─ MyProfile.jsx
-│
-├─ backend
-│ ├─ config
-│ │ ├─ cloudinary.js
-│ │ └─ mongodb.js
-│ │
-│ ├─ controllers
-│ │ ├─ adminController.js
-│ │ ├─ docterController.js
-│ │ └─ userController.js
-│ │
-│ ├─ middlewares
-│ │ ├─ authAdmin.js
-│ │ ├─ authUser.js
-│ │ └─ multer.js
-│ │
-│ ├─ models
-│ │ ├─ appointmentModels.js
-│ │ ├─ docterModel.js
-│ │ └─ userModels.js
-│ │
-│ └─ routes
-│ ├─ adminRoute.js
-│ ├─ docterRoute.js
-│ └─ userRoute.js
+├─ admin/                  # Admin portal (Vite + React)
+│  └─ src/AdminContext.jsx
+├─ frontend/               # Patient app
+│  ├─ components/          # Navbar, Header, Banner, TopDoctors, SpecialityMenu...
+│  ├─ context/AppContext.jsx
+│  └─ pages/               # Home, Doctors, Appointment, MyAppointments, MyProfile...
+└─ backend/
+   ├─ config/              # mongodb.js, cloudinary.js
+   ├─ controllers/         # admin, doctor, user
+   ├─ middlewares/         # authAdmin, authUser, multer
+   ├─ models/              # appointment, doctor, user
+   └─ routes/              # adminRoute, doctorRoute, userRoute
 ```
+
+---
+
+## 🚀 Getting Started
+
+**Prerequisites:** Node.js v18+ (v16 works), MongoDB Atlas account, Cloudinary account.
+
+### 1. Clone
+```bash
+git clone https://github.com/your-username/medicos.git
+cd medicos
+```
+
+### 2. Backend
+```bash
+cd backend
+npm install
+```
+Create `backend/.env`:
+```env
+PORT=4000
+MONGODB_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_jwt_secret_key
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_SECRET_KEY=your_secret_key
+ADMIN_EMAIL=admin@demo.com
+ADMIN_PASSWORD=admin1234
+```
+```bash
+npm run server
+```
+
+### 3. Frontend
+```bash
+cd ../frontend && npm install && npm run dev
+```
+
+### 4. Admin Portal
+```bash
+cd ../admin && npm install && npm run dev
+```
+
+### Quick Run (all three)
+Open three terminals and run the commands above. Defaults: backend `:4000`, frontend `:5173`, admin `:5174`.
+
+### Troubleshooting
+| Problem | Fix |
+| --- | --- |
+| Mongo connection error | Whitelist your IP in Atlas Network Access |
+| Image upload fails | Check Cloudinary keys and that the form uses `multipart/form-data` |
+| CORS error | Allow both frontend and admin origins in `cors()` |
+| 401 on every request | Confirm the token header name matches the middleware |
+
+---
+
+## 🔒 Security Design
+- Passwords hashed with **bcrypt**; never stored or returned in plain text
+- **JWT** verified in middleware; separate `authUser` and `authAdmin` guards enforce RBAC
+- Secrets live in `.env` (gitignored)
+- Uploads pass through Multer, then go to Cloudinary (no files stored on the server)
+
+**Hardening checklist (recommended next):**
+- [ ] `helmet` and `express-rate-limit` on auth routes
+- [ ] Input validation (Joi / Zod / express-validator)
+- [ ] Short-lived tokens with refresh flow
+- [ ] File type and size limits in Multer
+- [ ] Remove admin credentials from env before production; use a seeded admin user
+
+---
+
+## 🧠 Challenges & Learnings
+- **Double booking:** storing booked slots per doctor by date and checking before saving prevents two patients taking one slot. A MongoDB transaction or atomic `$addToSet` update would make this race-proof.
+- **Role separation:** two independent portals sharing one API kept admin UI out of the patient bundle.
+- **Media handling:** moving images to Cloudinary kept the backend stateless and deploy-friendly.
+- **Consistency:** cancelling must both flag the appointment and free the doctor's slot; handle both in one controller flow.
+
+---
+
+## 🗺 Roadmap
+- [ ] Razorpay payments (schema ready)
+- [ ] Doctor dashboard (earnings, today's patients, mark completed)
+- [ ] Email / SMS reminders (Nodemailer, Twilio)
+- [ ] Reschedule flow
+- [ ] Search and filters (speciality, fee, availability)
+- [ ] Prescriptions and medical history uploads
+- [ ] Analytics charts for admin
+- [ ] Docker + CI/CD (GitHub Actions)
+- [ ] Unit and API tests (Jest, Supertest)
+
+---
+
+## 🌍 Impact
+Fewer phone calls, no double bookings, and one source of truth for hospital operations, which scales from a small clinic to a multi-doctor hospital.
+
+---
+
+## 👥 Team
+| Name | Role | Links |
+| --- | --- | --- |
+| Prem Sharma | Full-stack developer | [GitHub](#) · [LinkedIn](#) |
+
+---
+
+## 📜 License
+MIT. See `LICENSE`.
+
+⭐ If you like this project, star the repo!
