@@ -7,7 +7,7 @@
 ![Storage](https://img.shields.io/badge/Media-Cloudinary-orange)
 ![Status](https://img.shields.io/badge/Status-Hackathon%20Build-purple)
 
-**🔗 Live Demo:** `<add-link>` | **🎥 Demo Video:** `<add-link>` | **📊 Pitch Deck:** `<add-link>`
+**🔗 Live Demo:** `add soon..` | **🎥 Demo Video:** `add soon..`
 
 ---
 
