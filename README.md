@@ -261,7 +261,7 @@ Fewer phone calls, no double bookings, and one source of truth for hospital oper
 ## 👥 Team
 | Name | Role | Links |
 | --- | --- | --- |
-| Prem Sharma | Full-stack developer | [GitHub](#) · [LinkedIn](#) |
+| Prem Sharma | Full-stack developer | [GitHub](#https://github.com/premmsharma122) · [LinkedIn](#https://www.linkedin.com/in/prem-sharma-0a4b62291/) |
 
 ---
 
